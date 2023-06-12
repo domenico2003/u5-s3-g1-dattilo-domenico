@@ -9,11 +9,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import it.epicode.be.prenotazioni.payloads.UserPayload;
+import it.epicode.be.prenotazioni.repository.EdificioRepository;
 
 @Service
 public class UserService {
 	@Autowired
 	UserRepository cr;
+	@Autowired
+	EdificioRepository er;
 
 	public User addUser(UserPayload user) {
 		User us = new User();
@@ -30,6 +33,19 @@ public class UserService {
 
 	public User findByEmail(String email) throws AccountNotFoundException {
 		return cr.findByEmail(email).orElseThrow(() -> new AccountNotFoundException());
+	}
+
+	public Edificio disattivaEdificio(long id, String codice) throws AccountNotFoundException {
+		Edificio edificio = er.findById(id).orElseThrow(() -> new AccountNotFoundException());
+		System.out.println(edificio.getCidiceDisattivazione());
+		return edificio;
+	}
+
+	public Edificio addedificio(EdificioPayload user) {
+		Edificio us = new Edificio();
+		us.setNome(user.getNome());
+		us.setCidiceDisattivazione(user.getCidiceDisattivazione());
+		return er.save(us);
 	}
 
 	public Page<User> getTuttiUser(int page) {

@@ -21,6 +21,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<ApiError> genericError(Exception e) {
 		ApiError payload = new ApiError("GENERIC SERVER ERROR! WE GONNA FIX IT ASAP", 500,
 				HttpStatus.INTERNAL_SERVER_ERROR);
+		// e.printStackTrace();
 		return new ResponseEntity<ApiError>(payload, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

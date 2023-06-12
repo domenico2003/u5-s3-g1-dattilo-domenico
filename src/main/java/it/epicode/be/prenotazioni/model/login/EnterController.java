@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,25 +25,30 @@ public class EnterController {
 	UtilsMetods um;
 	@Autowired
 	UserService us;
+	@Autowired
+	PasswordEncoder pe;
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
 	public User registrati(@RequestBody UserPayload user) throws Exception {
+		user.setPassword(pe.encode(user.getPassword()));
 		return us.addUser(user);
 	}
 
 	@PostMapping("/login")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<TokenPayload> login(@RequestBody LoginRequest user) throws Exception {
-		User users = us.findByEmail(user.getEmail());
+	public ResponseEntity<TokenPayload> login(@RequestBody LoginRequest up) throws Exception {
 
-		if (user.getPassword().equals(users.getPassword())) {
-			String token = um.createToken(users);
-			return new ResponseEntity<>(new TokenPayload(token), HttpStatus.OK);
-		} else {
-			throw new Exception("errore nell'inserimento dei campi");
+		User user = us.findByEmail(up.getEmail());
+
+		System.out.println(user);
+		if (user == null || !pe.matches(up.getPassword(), user.getPassword())) {
+			System.out.println(!pe.matches(up.getPassword(), user.getPassword()));
+			throw new Exception();
 		}
 
+		String token = um.createToken(user);
+		return new ResponseEntity<TokenPayload>(new TokenPayload(token), HttpStatus.OK);
 	}
 
 	@GetMapping("")

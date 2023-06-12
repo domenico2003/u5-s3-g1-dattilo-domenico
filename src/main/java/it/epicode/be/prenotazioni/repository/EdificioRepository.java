@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import it.epicode.be.prenotazioni.model.Citta;
-import it.epicode.be.prenotazioni.model.Edificio;
+import it.epicode.be.prenotazioni.model.login.Edificio;
 
 public interface EdificioRepository extends JpaRepository<Edificio, Long> {
 

@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import it.epicode.be.prenotazioni.model.RoleType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,9 +19,11 @@ import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings("serial")
 @Data
 @Entity
 @NoArgsConstructor
+@JsonIgnoreProperties({ "password" })
 public class User implements UserDetails {
 
 	@Id
