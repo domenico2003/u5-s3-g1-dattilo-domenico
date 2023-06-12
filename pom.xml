@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>epicode</groupId>
-	<artifactId>u5-s3-g1-dattilo-domenico</artifactId>
+	<artifactId>u5-s3-g1.1-dattilo-domenico</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>u5-s3-g1-dattilo-domenico</name>
+	<name>u5-s3-g1.1-dattilo-domenico</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
